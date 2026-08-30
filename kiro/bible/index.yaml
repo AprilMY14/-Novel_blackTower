@@ -1,0 +1,19 @@
+project: Black Signal
+role: gemini
+category: bible_working
+status: draft
+structure:
+  - characters
+  - factions
+  - locations
+  - timeline
+  - world
+  - relationships
+source:
+  legacy: ".kiro/steering/Old files"
+  canonical_root: "bible/"
+workflow:
+  - extract from old material
+  - sort into category
+  - write markdown and yaml records
+  - approve and promote to canonical bible

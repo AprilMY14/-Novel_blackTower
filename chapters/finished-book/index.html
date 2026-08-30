@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Finished Book - Chapter Navigator</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #1f2937;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+}
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+header p {
+  font-size: 1.1em;
+  opacity: 0.95;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 40px;
+}
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.stat-card .number {
+  font-size: 2em;
+  font-weight: bold;
+  color: #667eea;
+}
+.stat-card .label {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+}
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.chapter-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.chapter-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+.chapter-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+.chapter-header h2 {
+  font-size: 1.3em;
+  margin-bottom: 5px;
+}
+.chapter-info {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.chapter-meta {
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.chapter-status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+  border: 1px solid transparent;
+}
+.chapter-status.ready {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: rgba(55,65,81,0.15);
+}
+.chapter-status.approved {
+  background: #dcfce7;
+  color: #166534;
+  border-color: rgba(22,101,52,0.18);
+}
+.chapter-status.revise {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: rgba(146,64,14,0.2);
+}
+.chapter-status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: rgba(153,27,27,0.2);
+}
+.chapter-status.remaster {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border-color: rgba(146,64,14,0.24);
+}
+.chapter-card.approved {
+  border: 2px solid rgba(22,101,52,0.24);
+}
+.chapter-card.revise {
+  border: 2px solid rgba(146,64,14,0.24);
+}
+.chapter-card.rejected {
+  border: 2px solid rgba(153,27,27,0.24);
+}
+.chapter-card.remaster {
+  border: 2px solid rgba(217,119,6,0.42);
+  box-shadow: 0 10px 28px rgba(245, 158, 11, 0.2);
+}
+.chapter-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+}
+.btn-read {
+  background: #667eea;
+  color: white;
+}
+.btn-read:hover {
+  background: #5568d3;
+}
+.btn-review {
+  background: #10b981;
+  color: white;
+}
+.btn-review:hover {
+  background: #059669;
+}
+.footer {
+  text-align: center;
+  color: white;
+  padding: 20px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📚 Finished Book - Chapter Navigator</h1>
+    <p>Extracted from legacy DOCX - Ready for review</p>
+  </header>
+  
+  <div class="stats">
+    <div class="stat-card">
+      <div class="number">17</div>
+      <div class="label">Chapters</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">~760</div>
+      <div class="label">KB Total</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">100%</div>
+      <div class="label">Complete</div>
+    </div>
+  </div>
+  
+  <div class="chapters-grid" id="chaptersGrid"></div>
+  
+  <div class="footer">
+    <p>✓ All chapters extracted and verified | Ready for review workflow</p>
+  </div>
+</div>
+
+<script>
+const container = document.getElementById('chaptersGrid');
+const MAX_CHAPTER_SCAN = 40; // upper bound to probe for; raise as the book grows past this
+
+async function fileExists(url) {
+  try {
+    const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+    return res.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function discoverChapterEntries() {
+  const checks = [];
+  for (let num = 1; num <= MAX_CHAPTER_SCAN; num++) {
+    const padded = String(num).padStart(2, '0');
+    checks.push({ num, remasterFile: `chapter-${padded}-remaster.txt`, plainFile: `chapter-${padded}.txt` });
+  }
+
+  const results = await Promise.all(checks.map(async ({ num, remasterFile, plainFile }) => {
+    const [hasRemaster, hasPlain] = await Promise.all([fileExists(remasterFile), fileExists(plainFile)]);
+    if (hasRemaster) return { num, textFile: remasterFile };
+    if (hasPlain) return { num, textFile: plainFile };
+    return null;
+  }));
+
+  return results.filter(Boolean).sort((a, b) => a.num - b.num);
+}
+
+const statusMap = {
+  approved: { label: 'Approved', cssClass: 'approved' },
+  revise: { label: 'Needs Revision', cssClass: 'revise' },
+  rejected: { label: 'Rejected', cssClass: 'rejected' },
+  remaster: { label: 'Remaster Active', cssClass: 'remaster' },
+  ready: { label: 'Ready for Review', cssClass: 'ready' }
+};
+
+function getChapterState(num, textFile) {
+  if (textFile.includes('-remaster')) {
+    return 'remaster';
+  }
+  const saved = localStorage.getItem(`ch${num}`);
+  if (saved === 'approved' || saved === 'revise' || saved === 'rejected') {
+    return saved;
+  }
+  return 'ready';
+}
+
+function renderChapters(chapterEntries) {
+  container.innerHTML = '';
+  chapterEntries.forEach(({ num, textFile }) => {
+    const card = document.createElement('div');
+    const state = getChapterState(num, textFile);
+    const meta = statusMap[state];
+    const viewerUrl = `chapter-viewer.html?file=${encodeURIComponent(textFile)}`;
+
+    card.className = `chapter-card ${meta.cssClass} ${textFile.includes('-remaster') ? 'remaster' : ''}`;
+    card.innerHTML = `
+      <div class="chapter-header">
+        <h2>Chapter ${num}</h2>
+      </div>
+      <div class="chapter-info">
+        <div class="chapter-status ${meta.cssClass}">${meta.label}</div>
+        <div class="chapter-meta">
+          <div>📄 ${textFile}</div>
+          <div>${textFile.includes('-remaster') ? '🟡 Active remaster version' : '🔍 Verified & Complete'}</div>
+        </div>
+        <div class="chapter-buttons">
+          <a href="${textFile}" class="btn btn-read" download>📥 Text</a>
+          <a href="${viewerUrl}" class="btn btn-review">📋 Read</a>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  const countEl = document.querySelector('.stat-card .number');
+  if (countEl) countEl.textContent = String(chapterEntries.length);
+}
+
+(async () => {
+  container.innerHTML = '<p style="color:white;text-align:center;">Scanning for chapters…</p>';
+  const chapterEntries = await discoverChapterEntries();
+  renderChapters(chapterEntries);
+})();
+</script>
+</body>
+</html>

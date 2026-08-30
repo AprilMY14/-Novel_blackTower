@@ -1,0 +1,55 @@
+{
+  "project": "Black Signal",
+  "version": "2026-08-29",
+  "active_core_files": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "agent-guardrails.md",
+    "chapter-preflight-checklist.md",
+    "final-workflow-core.md"
+  ],
+  "required_read_order": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "agent-guardrails.md",
+    "chapter-preflight-checklist.md"
+  ],
+  "roles": {
+    "Codex": {
+      "owns": [
+        "plot",
+        "premise",
+        "worldbuilding",
+        "story structure",
+        "canon decisions"
+      ]
+    },
+    "Gemini": {
+      "owns": [
+        "chapter writing",
+        "scene execution",
+        "prose",
+        "legacy conversion"
+      ]
+    }
+  },
+  "chapter_gate": {
+    "required": true,
+    "final_statement": "I have completed the chapter preflight and am authorized to write this chapter from approved planning only.",
+    "blocked_if_missing": true,
+    "allowed_path": "kiro/chapters/"
+  },
+  "legacy_policy": {
+    "old_files": "archive reference only",
+    "converted_md_files": "review-only unless explicitly approved",
+    "active_canon": "approved Bible and approved planning documents only"
+  },
+  "protected_files": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "agent-guardrails.md",
+    "chapter-preflight-checklist.md",
+    "final-workflow-core.md"
+  ],
+  "rule": "Keep the operational core minimal, strict, and clear."
+}

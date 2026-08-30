@@ -1,0 +1,51 @@
+{
+  "project": "Black Signal",
+  "version": "2026-08-29",
+  "task": "chapter_writing",
+  "hard_gate": true,
+  "chapter_template": "kiro/chapters/chapter-template.md",
+  "chapter_creation_rule": "Each new chapter file must begin from the project chapter template and preserve the same section ordering and headings.",
+  "required_read_files": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "roles-and-boundaries.md",
+    "relevant_bible_section",
+    "previous_chapter_if_needed"
+  ],
+  "required_confirmation": [
+    "I have read AGENTS.md",
+    "I have read PROJECT_WORKFLOW.md",
+    "I have read roles-and-boundaries.md",
+    "This task is chapter writing / manuscript work",
+    "This is not a workflow or config change",
+    "This is not an unapproved canon change",
+    "I am writing inside kiro/chapters/",
+    "I am not editing protected workflow files",
+    "I am not editing Codex planning files",
+    "I have the approved plot reference for this chapter",
+    "I understand the chapter objective",
+    "I will not invent new canon without review",
+    "I have read the current writing bible: .kiro/steering/writing-bible.md",
+    "I have checked the relevant writing-bible rules for this chapter",
+    "I am writing in the same style and direction as the writing bible",
+    "I will revise any section that drifts away from the writing bible before marking the chapter ready",
+    "I understand the writing style and story rules"
+  ],
+  "final_gate_statement": "I have completed the chapter preflight and am authorized to write this chapter from approved planning only.",
+  "stop_rule": "If the final gate statement is not explicitly confirmed, chapter drafting must not begin.",
+  "allowed_paths": [
+    "kiro/chapters/"
+  ],
+  "blocked_paths": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "roles-and-boundaries.md",
+    "workflow-config.json",
+    "workflow-review-config.json",
+    "agent-guardrails.json",
+    "agent-guardrails.md",
+    "codex/",
+    "bible/",
+    "plot/"
+  ]
+}

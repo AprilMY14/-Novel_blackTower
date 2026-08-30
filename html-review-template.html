@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      background: #f6f7fb;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #dfe3ea;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .meta {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: #eef4ff;
+      border-radius: 8px;
+      border: 1px solid #dbe7ff;
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .draft { background: #e0f2fe; color: #0f172a; }
+    .qa { background: #fef3c7; color: #7c2d12; }
+    .revision { background: #fee2e2; color: #7f1d1d; }
+    .approved { background: #dcfce7; color: #14532d; }
+    .summary {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+    .diff-section {
+      margin-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 20px;
+    }
+    .diff-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+      background: #fff;
+    }
+    .added {
+      background: #dcfce7;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .removed {
+      background: #fecaca;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .modified {
+      background: #fef3c7;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .note {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #374151;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chapter Review</h1>
+
+    <div class="meta">
+      <div><strong>Project:</strong> Black Signal</div>
+      <div><strong>Chapter:</strong> CHAPTER_NAME</div>
+      <div><strong>Version:</strong> VERSION_LABEL</div>
+      <div><strong>Date:</strong> REVIEW_DATE</div>
+      <div class="status draft">STATUS</div>
+    </div>
+
+    <div class="summary">
+      <h3>Summary of Changes</h3>
+      <ul>
+        <li>New material added in this chapter.</li>
+        <li>Continuity fixes applied.</li>
+        <li>Story logic reviewed against world bible.</li>
+      </ul>
+    </div>
+
+    <div class="diff-section">
+      <h3>Reviewed Sections</h3>
+
+      <div class="diff-box">
+        <h4>Section A</h4>
+        <pre>
+This is the rendered text for review.
+<span class="added">Added text appears highlighted in green.</span>
+<span class="removed">Removed text appears highlighted in red.</span>
+<span class="modified">Modified content appears highlighted in yellow.</span>
+        </pre>
+      </div>
+
+      <div class="diff-box">
+        <h4>Review Notes</h4>
+        <div class="note">
+          - Continuity check: passed / needs revision<br>
+          - World logic: passed / needs revision<br>
+          - Dialogue consistency: passed / needs revision<br>
+          - Pacing: passed / needs revision
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

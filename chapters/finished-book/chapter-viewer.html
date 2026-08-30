@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter Viewer</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #312e81 100%);
+      color: #e2e8f0;
+    }
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .topbar h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 2vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+      font-weight: 700;
+      border: 1px solid rgba(146, 64, 14, 0.2);
+    }
+    .panel {
+      background: rgba(255,255,255,0.96);
+      color: #0f172a;
+      border-radius: 20px;
+      box-shadow: 0 26px 60px rgba(15, 23, 42, 0.3);
+      padding: 24px 24px 28px;
+    }
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .meta-chip {
+      background: #eef2ff;
+      border: 1px solid rgba(79,70,229,0.16);
+      color: #3730a3;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .compare-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .action-btn, .save-btn, .cancel-btn, .download-btn, .compare-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+    .action-btn:hover, .save-btn:hover, .cancel-btn:hover, .download-btn:hover {
+      transform: translateY(-1px);
+    }
+    .action-btn {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .save-btn {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: white;
+    }
+    .compare-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+    }
+    .download-btn {
+      background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+      color: white;
+    }
+    .cancel-btn {
+      background: #f8fafc;
+      color: #334155;
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+    .editor-wrap {
+      display: none;
+      margin-bottom: 18px;
+    }
+    .editor-wrap.visible {
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      min-height: 58vh;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.7);
+      padding: 18px 16px;
+      font-size: 16px;
+      line-height: 1.8;
+      font-family: Georgia, 'Times New Roman', serif;
+      resize: vertical;
+    }
+    .editor-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .content {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 17px;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 60vh;
+      padding: 4px 2px 0;
+    }
+    .error {
+      color: #b91c1c;
+      font-weight: 700;
+      display: none;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-top: 18px;
+      text-decoration: none;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+    .history-panel {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      padding: 22px 20px;
+      box-shadow: 0 24px 56px rgba(15, 23, 42, 0.18);
+    }
+    .history-panel h3 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      color: #0f172a;
+    }
+    .history-list {
+      display: grid;
+      gap: 10px;
+    }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #111827;
+    }
+    .history-item.revise,
+    .history-item.draft {
+      background: #fef3c7;
+      border-color: rgba(146,64,14,0.35);
+      color: #78350f;
+    }
+    .history-item.approved {
+      background: #dcfce7;
+      border-color: rgba(22,101,52,0.28);
+      color: #14532d;
+    }
+    .history-item.rejected {
+      background: #fee2e2;
+      border-color: rgba(153,27,27,0.3);
+      color: #7f1d1d;
+    }
+    .history-item.remaster {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-color: rgba(146,64,14,0.32);
+      color: #78350f;
+    }
+    .history-badge {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      background: rgba(255,255,255,0.75);
+      color: #111827;
+      box-shadow: inset 0 0 0 1px rgba(17,24,39,0.08);
+    }
+    .history-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: #111827;
+    }
+    .history-btn {
+      border: none;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+      padding: 6px 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .diff-region {
+      display: block;
+      margin: 0 0 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.02);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+    .diff-segment {
+      display: block;
+      white-space: pre-wrap;
+      margin: 0;
+      line-height: 1.9;
+      padding: 6px 8px;
+    }
+    .diff-added {
+      background: rgba(34, 197, 94, 0.18);
+      color: #166534;
+      border-top: 1px solid rgba(34, 197, 94, 0.25);
+    }
+    .diff-removed {
+      background: rgba(239, 68, 68, 0.16);
+      color: #991b1b;
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+    }
+    .diff-plain {
+      color: #0f172a;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 6px;
+      padding: 4px 6px;
+    }
+    .diff-context {
+      opacity: 0.7;
+      font-size: 0.92em;
+      background: rgba(148, 163, 184, 0.12);
+      color: #475569;
+    }
+    .scroll-top-btn {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 56px;
+      height: 56px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 800;
+      box-shadow: 0 16px 36px rgba(79, 70, 229, 0.35);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 999;
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <h1 id="chapterTitle">Chapter Viewer</h1>
+      <div id="chapterBadge" class="badge">Loading…</div>
+    </div>
+
+    <div class="panel">
+      <div class="meta">
+        <div class="meta-chip" id="metaFile">File</div>
+        <div class="meta-chip" id="metaStatus">Status</div>
+      </div>
+
+      <div class="action-row">
+        <button id="editBtn" class="action-btn">✏️ Edit</button>
+        <button id="downloadBtn" class="download-btn">⬇️ Export</button>
+      </div>
+
+      <div class="compare-row">
+        <button id="compareToggleBtn" class="compare-btn">Compare</button>
+      </div>
+
+      <div id="editorWrap" class="editor-wrap">
+        <textarea id="editor"></textarea>
+        <div class="editor-actions">
+          <button id="cancelEditBtn" class="cancel-btn">Cancel</button>
+          <button id="commitEditBtn" class="save-btn">Save as Version</button>
+        </div>
+      </div>
+
+      <div id="error" class="error">Chapter file not found.</div>
+      <div id="chapterContent" class="content"></div>
+      <a class="nav-link" href="index.html">← Back to chapter index</a>
+    </div>
+
+    <aside class="history-panel">
+      <h3>Revision History</h3>
+      <div id="historyList" class="history-list"></div>
+    </aside>
+  </div>
+
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">↑</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const fileName = params.get('file') || 'chapter-01-remaster.txt';
+    const title = document.getElementById('chapterTitle');
+    const badge = document.getElementById('chapterBadge');
+    const metaFile = document.getElementById('metaFile');
+    const metaStatus = document.getElementById('metaStatus');
+    const content = document.getElementById('chapterContent');
+    const editorWrap = document.getElementById('editorWrap');
+    const editor = document.getElementById('editor');
+    const errorBox = document.getElementById('error');
+    const historyList = document.getElementById('historyList');
+    const editBtn = document.getElementById('editBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const commitEditBtn = document.getElementById('commitEditBtn');
+    const compareToggleBtn = document.getElementById('compareToggleBtn');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    let isCompareMode = false;
+
+    const storageBase = `chapter_${fileName}`;
+    const legacyHistoryKey = `${storageBase}_history`;
+    const historyKey = `${storageBase}_versions`;
+    const baselineKey = `${storageBase}_baseline`;
+    const currentKey = `${storageBase}_current`;
+    const statusKey = `${storageBase}_status`;
+    const baselineFileName = fileName.includes('-remaster.txt') ? fileName.replace('-remaster.txt', '.txt') : null;
+
+    function migrateLegacyVersionStore() {
+      const legacy = localStorage.getItem(legacyHistoryKey);
+      const current = localStorage.getItem(historyKey);
+      if (!legacy || current) return;
+
+      try {
+        const parsed = JSON.parse(legacy);
+        if (Array.isArray(parsed) && parsed.length) {
+          localStorage.setItem(historyKey, JSON.stringify(parsed));
+        }
+      } catch {
+        // Ignore malformed legacy data.
+      }
+    }
+
+    function getBaselineText() {
+      return localStorage.getItem(baselineKey) || '';
+    }
+
+    function normalizeHistoryEntries() {
+      const entries = readVersions();
+      const chapterLabel = `Chapter ${chapterNumber}`;
+      const hasChapterBase = entries.some((item) => item.label === chapterLabel);
+      const hasRemasterStart = entries.some((item) => item.label === 'Remaster Revision 1' || item.label === 'Initial remaster');
+
+      if (hasChapterBase && hasRemasterStart) {
+        return entries;
+      }
+
+      const baselineText = getBaselineText() || localStorage.getItem(currentKey) || '';
+      const nextEntries = [];
+
+      if (baselineText) {
+        nextEntries.push({
+          label: chapterLabel,
+          state: 'draft',
+          time: new Date().toLocaleString(),
+          text: baselineText
+        });
+      }
+
+      const currentText = localStorage.getItem(currentKey) || '';
+      if (currentText) {
+        nextEntries.push({
+          label: 'Remaster Revision 1',
+          state: 'remaster',
+          time: new Date().toLocaleString(),
+          text: currentText
+        });
+      }
+
+      if (nextEntries.length) {
+        writeVersions(nextEntries);
+        return nextEntries;
+      }
+
+      return entries;
+    }
+
+    migrateLegacyVersionStore();
+
+    const chapterNumber = (fileName.match(/chapter-(\d+)/) || [])[1] || '1';
+    title.textContent = `Chapter ${chapterNumber}`;
+    metaFile.textContent = `File: ${fileName}`;
+
+    function escapeHtml(value) {
+      return (value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showFallbackMessage(message = 'Unable to load chapter content. Please reload the page or open the chapter from the local preview server.') {
+      errorBox.style.display = 'block';
+      errorBox.textContent = message;
+      content.textContent = message;
+      content.innerHTML = '';
+    }
+
+    function splitIntoBlocks(text) {
+      return (text || '')
+        .replace(/\r\n/g, '\n')
+        .split(/\n\s*\n+/)
+        .map((block) => block.trim())
+        .filter((block) => block.length > 0);
+    }
+
+    function buildLcsMatrix(left, right) {
+      const matrix = Array.from({ length: left.length + 1 }, () => Array(right.length + 1).fill(0));
+      for (let i = left.length - 1; i >= 0; i -= 1) {
+        for (let j = right.length - 1; j >= 0; j -= 1) {
+          matrix[i][j] = left[i] === right[j] ? matrix[i + 1][j + 1] + 1 : Math.max(matrix[i + 1][j], matrix[i][j + 1]);
+        }
+      }
+      return matrix;
+    }
+
+    function diffLines(previousText, nextText) {
+      const previousBlocks = splitIntoBlocks(previousText || '');
+      const nextBlocks = splitIntoBlocks(nextText || '');
+      const matrix = buildLcsMatrix(previousBlocks, nextBlocks);
+      const ops = [];
+      let i = 0;
+      let j = 0;
+
+      while (i < previousBlocks.length && j < nextBlocks.length) {
+        if (previousBlocks[i] === nextBlocks[j]) {
+          ops.push({ type: 'same', value: previousBlocks[i] });
+          i += 1;
+          j += 1;
+        } else if (matrix[i + 1][j] >= matrix[i][j + 1]) {
+          ops.push({ type: 'removed', value: previousBlocks[i] });
+          i += 1;
+        } else {
+          ops.push({ type: 'added', value: nextBlocks[j] });
+          j += 1;
+        }
+      }
+
+      while (i < previousBlocks.length) {
+        ops.push({ type: 'removed', value: previousBlocks[i] });
+        i += 1;
+      }
+
+      while (j < nextBlocks.length) {
+        ops.push({ type: 'added', value: nextBlocks[j] });
+        j += 1;
+      }
+
+      return ops;
+    }
+
+    function renderDiffHtml(previousText, nextText) {
+      const ops = diffLines(previousText || '', nextText || '');
+      const regions = [];
+      let currentRegion = { removed: [], added: [] };
+
+      const isMeaningfulLine = (line) => {
+        if (typeof line !== 'string') return false;
+        const normalized = line.trim();
+        return normalized !== '' && normalized !== '-';
+      };
+
+      const compactPreview = (items) => {
+        const clean = items.filter(isMeaningfulLine);
+        if (clean.length <= 5) return clean;
+        return [...clean.slice(0, 3), '…'];
+      };
+
+      const finalizeRegion = () => {
+        const removedLines = compactPreview(currentRegion.removed);
+        const addedLines = compactPreview(currentRegion.added);
+
+        if (!removedLines.length && !addedLines.length) {
+          currentRegion = { removed: [], added: [] };
+          return;
+        }
+
+        const block = [];
+        if (removedLines.length) {
+          block.push(`<div class="diff-segment diff-removed">${escapeHtml(removedLines.join('\n'))}</div>`);
+        }
+        if (addedLines.length) {
+          block.push(`<div class="diff-segment diff-added">${escapeHtml(addedLines.join('\n'))}</div>`);
+        }
+
+        if (block.length) {
+          regions.push(`<div class="diff-region">${block.join('')}</div>`);
+        }
+
+        currentRegion = { removed: [], added: [] };
+      };
+
+      for (const op of ops) {
+        if (op.type === 'same') {
+          finalizeRegion();
+          continue;
+        }
+
+        if (op.type === 'removed') {
+          currentRegion.removed.push(op.value);
+        } else if (op.type === 'added') {
+          currentRegion.added.push(op.value);
+        }
+      }
+
+      finalizeRegion();
+      return regions.join('');
+    }
+
+    function applyStatusState(state) {
+      const isRemaster = fileName.includes('-remaster');
+      if (isRemaster) {
+        badge.textContent = 'Remaster Active';
+        metaStatus.textContent = 'Status: Remaster';
+      } else if (state === 'approved') {
+        badge.textContent = 'Approved';
+        metaStatus.textContent = 'Status: Approved';
+      } else if (state === 'rejected') {
+        badge.textContent = 'Rejected';
+        metaStatus.textContent = 'Status: Rejected';
+      } else if (state === 'revise') {
+        badge.textContent = 'Revision Needed';
+        metaStatus.textContent = 'Status: Revise';
+      } else {
+        badge.textContent = 'Standard Draft';
+        metaStatus.textContent = 'Status: Draft';
+      }
+
+      const label = badge.textContent;
+      badge.style.background = label.includes('Remaster') || label.includes('Revision') ? 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' : label.includes('Approved') ? 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)' : label.includes('Rejected') ? 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)' : 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)';
+      badge.style.color = label.includes('Rejected') ? '#991b1b' : label.includes('Approved') ? '#166534' : '#92400e';
+    }
+
+    function readVersions() {
+      try {
+        return JSON.parse(localStorage.getItem(historyKey) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function writeVersions(items) {
+      localStorage.setItem(historyKey, JSON.stringify(items));
+    }
+
+    function showText(text, comparisonSource = null, forceDiff = false) {
+      const currentText = text || '';
+      const baselineText = comparisonSource !== null ? comparisonSource : getBaselineText();
+
+      if (!currentText.trim()) {
+        showFallbackMessage('Chapter content is empty. Reload the page to repopulate the draft.');
+        return;
+      }
+
+      const shouldRenderDiff = forceDiff && baselineText && baselineText !== currentText;
+      if (shouldRenderDiff) {
+        content.innerHTML = renderDiffHtml(baselineText, currentText);
+      } else {
+        content.textContent = currentText;
+      }
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+      localStorage.setItem(currentKey, currentText);
+    }
+
+    function setCompareMode(active) {
+      isCompareMode = !!active;
+      compareToggleBtn.textContent = isCompareMode ? 'Read without diff' : 'Compare';
+      const currentText = localStorage.getItem(currentKey) || content.textContent || '';
+      const baselineText = getBaselineText();
+      if (isCompareMode && baselineText && baselineText !== currentText) {
+        content.innerHTML = renderDiffHtml(baselineText, currentText);
+        return;
+      }
+      content.textContent = currentText;
+    }
+
+    function resetLegacyHistoryIfNeeded() {
+      const legacy = localStorage.getItem(legacyHistoryKey);
+      const current = localStorage.getItem(historyKey);
+      if (legacy && !current) {
+        localStorage.setItem(historyKey, legacy);
+      }
+    }
+
+    function renderHistory() {
+      const items = normalizeHistoryEntries();
+      historyList.innerHTML = '';
+
+      if (!items.length) {
+        const empty = document.createElement('div');
+        empty.className = 'history-item revise';
+        empty.innerHTML = '<span>Initial draft</span><span class="history-badge">new</span>';
+        historyList.appendChild(empty);
+        return;
+      }
+
+      items.forEach((item, index) => {
+        const row = document.createElement('div');
+        const stateClass = item.state === 'draft' ? 'draft' : (item.state || 'revise');
+        row.className = `history-item ${stateClass}`;
+        row.innerHTML = `
+          <div class="history-meta">
+            <span>${item.label} · ${item.time}</span>
+            <span class="history-badge">${item.state || 'revise'}</span>
+          </div>
+          <button class="history-btn" data-restore-index="${index}">Restore</button>
+        `;
+        historyList.appendChild(row);
+      });
+
+      historyList.querySelectorAll('[data-restore-index]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const index = Number(btn.dataset.restoreIndex);
+          const items2 = readVersions();
+          const target = items2[index];
+          if (!target) return;
+          localStorage.setItem(currentKey, target.text);
+          localStorage.setItem(statusKey, target.state || 'remaster');
+          applyStatusState(target.state || 'remaster');
+          showText(target.text, getBaselineText() || null);
+        });
+      });
+    }
+
+    function initializeVersionHistory() {
+      resetLegacyHistoryIfNeeded();
+      const savedCurrent = localStorage.getItem(currentKey);
+      const savedBaseline = localStorage.getItem(baselineKey);
+      const versions = readVersions();
+
+      if (baselineFileName) {
+        Promise.all([
+          fetch(baselineFileName, { cache: 'no-store' })
+            .then((res) => (res.ok ? res.text() : (savedBaseline || '')))
+            .catch(() => savedBaseline || ''),
+          fetch(fileName, { cache: 'no-store' })
+            .then((res) => (res.ok ? res.text() : (savedCurrent || '')))
+            .catch(() => savedCurrent || '')
+        ])
+          .then(([baselineText, remasterText]) => {
+            const normalizedBaseline = baselineText || savedBaseline || '';
+            const normalizedCurrent = remasterText || savedCurrent || '';
+
+            if (normalizedBaseline) {
+              localStorage.setItem(baselineKey, normalizedBaseline);
+            }
+            localStorage.setItem(currentKey, normalizedCurrent);
+            localStorage.setItem(statusKey, 'remaster');
+
+            const normalizedHistory = normalizeHistoryEntries();
+            if (!normalizedHistory.length) {
+              const baselineEntry = {
+                label: `Chapter ${chapterNumber}`,
+                state: 'draft',
+                time: new Date().toLocaleString(),
+                text: normalizedBaseline
+              };
+              const remasterEntry = {
+                label: 'Remaster Revision 1',
+                state: 'remaster',
+                time: new Date().toLocaleString(),
+                text: normalizedCurrent
+              };
+              writeVersions([baselineEntry, remasterEntry]);
+            }
+
+            applyStatusState('remaster');
+            showText(normalizedCurrent, normalizedBaseline, false);
+            renderHistory();
+          })
+          .catch(() => {
+            showFallbackMessage('Unable to load the chapter files. Please retry from the chapter index or refresh the page.');
+          });
+        return;
+      }
+
+      if (!savedCurrent && versions.length === 0) {
+        fetch(fileName)
+          .then((res) => {
+            if (!res.ok) throw new Error('not found');
+            return res.text();
+          })
+          .then((text) => {
+            const initial = {
+              label: 'Initial draft',
+              state: 'draft',
+              time: new Date().toLocaleString(),
+              text
+            };
+            writeVersions([initial]);
+            localStorage.setItem(currentKey, text);
+            localStorage.setItem(statusKey, 'draft');
+            applyStatusState('draft');
+            showText(text);
+            renderHistory();
+          })
+          .catch(() => {
+            showFallbackMessage('Unable to load the chapter files. Please retry from the chapter index or refresh the page.');
+          });
+        return;
+      }
+
+      if (savedCurrent) {
+        applyStatusState(localStorage.getItem(statusKey) || 'draft');
+        showText(savedCurrent, getBaselineText(), false);
+      } else if (versions.length) {
+        const first = versions[0];
+        localStorage.setItem(currentKey, first.text);
+        localStorage.setItem(statusKey, first.state || 'draft');
+        applyStatusState(first.state || 'draft');
+        showText(first.text, getBaselineText(), false);
+      }
+      renderHistory();
+    }
+
+    function openEditor() {
+      editor.value = content.textContent || localStorage.getItem(currentKey) || '';
+      editorWrap.classList.add('visible');
+    }
+
+    function closeEditor() {
+      editorWrap.classList.remove('visible');
+      editor.value = '';
+    }
+
+    function saveRevision(nextState = 'draft') {
+      const nextText = (editor.value || '').trim();
+      const currentText = localStorage.getItem(currentKey) || '';
+      const normalizedText = nextText || currentText;
+      const versions = normalizeHistoryEntries();
+      const baselineText = getBaselineText();
+      const revisionNumber = versions.filter((item) => (item.label || '').startsWith('Remaster Revision')).length + 1;
+      const nextVersion = {
+        label: `Remaster Revision ${revisionNumber}`,
+        state: nextState,
+        time: new Date().toLocaleString(),
+        text: normalizedText
+      };
+
+      const nextHistory = [...versions, nextVersion].slice(0, 12);
+      writeVersions(nextHistory);
+      localStorage.setItem(currentKey, normalizedText);
+      localStorage.setItem(statusKey, nextState);
+      applyStatusState(nextState);
+      showText(normalizedText, baselineText || null, false);
+      renderHistory();
+      closeEditor();
+    }
+
+    function setupScrollToTop() {
+      const toggle = () => {
+        if (window.scrollY > 260) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      };
+
+      window.addEventListener('scroll', toggle, { passive: true });
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      toggle();
+    }
+
+    editBtn.addEventListener('click', openEditor);
+    commitEditBtn.addEventListener('click', () => saveRevision('draft'));
+    cancelEditBtn.addEventListener('click', closeEditor);
+    compareToggleBtn.addEventListener('click', () => setCompareMode(!isCompareMode));
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([localStorage.getItem(currentKey) || content.textContent || ''], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName.replace('.txt', '-saved.txt');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    setupScrollToTop();
+    initializeVersionHistory();
+  </script>
+</body>
+</html>

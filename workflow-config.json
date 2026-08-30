@@ -1,0 +1,81 @@
+{
+  "project": "Black Signal",
+  "version": "2026-08-29",
+  "required_read_order": [
+    "AGENTS.md",
+    "PROJECT_WORKFLOW.md",
+    "roles-and-boundaries.md"
+  ],
+  "agents": {
+    "codex": {
+      "role": "story architect and planner",
+      "ownership": [
+        "plot",
+        "premise",
+        "character logic",
+        "worldbuilding",
+        "canon decisions",
+        "story architecture"
+      ],
+      "read_before_work": [
+        "AGENTS.md",
+        "PROJECT_WORKFLOW.md",
+        "roles-and-boundaries.md",
+        "codex/plot/",
+        "codex/bible/",
+        "codex/brainstorm/"
+      ],
+      "task_types": [
+        "idea generation",
+        "plot design",
+        "arc planning",
+        "worldbuilding",
+        "story validation"
+      ]
+    },
+    "gemini": {
+      "role": "writer and bible organizer",
+      "ownership": [
+        "chapter writing",
+        "scene drafting",
+        "prose execution",
+        "legacy conversion",
+        "Bible structuring",
+        "draft continuity"
+      ],
+      "read_before_work": [
+        "AGENTS.md",
+        "PROJECT_WORKFLOW.md",
+        "roles-and-boundaries.md",
+        "kiro/bible/README.md",
+        "kiro/chapters/",
+        "bible/"
+      ],
+      "task_types": [
+        "chapter writing",
+        "scene creation",
+        "story execution",
+        "Old files conversion",
+        "Bible cleanup"
+      ]
+    }
+  },
+  "workflow": {
+    "rule": "Read the workflow files first before any task.",
+    "decision_gate": "Any plot or canon change must be validated by Codex before implementation.",
+    "legacy_policy": "Old files are archive reference, not active canon unless approved.",
+    "converted_legacy_policy": "Once legacy material is converted into .md records, those files are review-only and not active working source material unless explicitly re-approved.",
+    "writing_policy": "Gemini writes from approved planning, not from ad-hoc invention.",
+    "writing_bible_required": true,
+    "writing_bible_path": ".kiro/steering/writing-bible.md",
+    "chapter_template": "kiro/chapters/chapter-template.md",
+    "chapter_creation_rule": "Every new chapter must be created from kiro/chapters/chapter-template.md and must keep the same structural sections across all chapter files. Every chapter creation also requires a writing-bible compliance check before it is considered valid.",
+    "approval_states": [
+      "draft",
+      "in review",
+      "approved",
+      "rejected",
+      "archived"
+    ]
+  }
+}

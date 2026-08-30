@@ -1,0 +1,118 @@
+{
+  "project": "Black Signal",
+  "version": "2026-08-29",
+  "workflow": {
+    "read_gate": {
+      "required_files": [
+        "AGENTS.md",
+        "PROJECT_WORKFLOW.md",
+        "roles-and-boundaries.md"
+      ],
+      "rule": "Every agent must read these files before any task starts."
+    },
+    "task_routing": {
+      "plot_idea_worldbuilding": {
+        "agent": "Codex",
+        "read_additional": [
+          "codex/plot/",
+          "codex/bible/",
+          "codex/brainstorm/"
+        ]
+      },
+      "chapter_writing_manuscript": {
+        "agent": "Gemini",
+        "read_additional": [
+          "kiro/bible/README.md",
+          "kiro/chapters/",
+          "bible/"
+        ]
+      },
+      "old_files_conversion": {
+        "agent": "Gemini",
+        "read_additional": [
+          ".kiro/steering/Old files/",
+          "kiro/bible/README.md",
+          "bible/"
+        ]
+      }
+    },
+    "decision_gate": {
+      "applies_to": [
+        "plot direction",
+        "major character arc",
+        "world rules",
+        "story canon",
+        "faction logic",
+        "timeline logic",
+        "major event consequences"
+      ],
+      "required_review": "Codex",
+      "implementation_rule": "Gemini may implement only after Codex approval."
+    },
+    "review_and_qa": {
+      "enabled": true,
+      "stage": [
+        "draft",
+        "qa",
+        "revision",
+        "approved",
+        "archived"
+      ],
+      "qa_checks": [
+        "continuity vs previous chapter",
+        "continuity vs bible",
+        "plot logic consistency",
+        "character voice consistency",
+        "pacing and scene purpose",
+        "redundancy check",
+        "info dump check",
+        "grammar and readability",
+        "tone alignment"
+      ],
+      "reviewer": "Human reviewer / project owner",
+      "output_format": "HTML diff review with highlights",
+      "legacy_material_rule": "Converted .md legacy files are review-only and not active canon unless explicitly approved."
+    },
+    "html_review_export": {
+      "required": true,
+      "format": "html",
+      "features": [
+        "chapter title",
+        "version label",
+        "summary of changes",
+        "added text highlight",
+        "removed text highlight",
+        "modified section highlight",
+        "previous vs current view",
+        "review notes panel",
+        "approval state",
+        "change log summary"
+      ],
+      "goal": "Make it easy for the user to review only newly changed material."
+    },
+    "change_log": {
+      "required": true,
+      "fields": [
+        "what_changed",
+        "why_changed",
+        "affected_files",
+        "approver",
+        "state"
+      ],
+      "states": [
+        "draft",
+        "in review",
+        "approved",
+        "rejected",
+        "archived"
+      ]
+    }
+  },
+  "states": {
+    "draft": "Gemini is writing the chapter or conversion file.",
+    "qa": "Content is checked for logic, continuity, and style.",
+    "revision": "Edits are made after review feedback.",
+    "approved": "Chapter or Bible entry is accepted and considered valid.",
+    "archived": "Legacy or review-only material kept for traceability, not active use."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "project": "Black Signal",
+  "version": "2026-08-29",
+  "guardrail_mode": "strict",
+  "routing": {
+    "rule": "Any user request must be classified before work begins.",
+    "classification": {
+      "plot_idea_worldbuilding": "Codex",
+      "chapter_writing_manuscript": "Gemini",
+      "legacy_conversion": "Gemini",
+      "config_or_workflow_change": "Human reviewer / maintainer only",
+      "review_and_approval": "Human reviewer / maintainer only"
+    },
+    "misroute_warning": "If a request does not match the assigned role, stop and ask for confirmation before proceeding.",
+    "required_confirmations": [
+      "task owner matches assigned agent",
+      "target folder matches agent ownership",
+      "target file is not restricted"
+    ]
+  },
+  "ownership": {
+    "Codex": [
+      "codex/",
+      "plot/",
+      "bible/",
+      "notes/ideas/",
+      "notes/unresolved/"
+    ],
+    "Gemini": [
+      "kiro/",
+      "chapters/",
+      "kiro/bible/",
+      "notes/research/"
+    ],
+    "restricted": [
+      "AGENTS.md",
+      "PROJECT_WORKFLOW.md",
+      "roles-and-boundaries.md",
+      "workflow-config.json",
+      "workflow-review-config.json",
+      "agent-guardrails.json",
+      "review-checklist.md",
+      "html-review-template.html"
+    ],
+    "restricted_rule": "These files are protected workflow files and may not be edited by Codex or Gemini without explicit maintainer approval."
+  },
+  "warnings": {
+    "if_user_requests_wrong_agent": [
+      "This task belongs to Codex, not Gemini.",
+      "This task belongs to Gemini, not Codex.",
+      "Please confirm the task type before continuing."
+    ],
+    "if_target_is_protected": [
+      "This file is protected workflow metadata.",
+      "Editing this file requires maintainer approval.",
+      "Stop and request confirmation."
+    ]
+  },
+  "safety_checks": [
+    "check whether the request matches the assigned agent",
+    "check whether the target path is inside the agent's allowed ownership",
+    "check whether the target file is protected",
+    "check whether the task changes canonical logic, plot, or workflow rules",
+    "require explicit confirmation if any protected file is affected"
+  ]
+}

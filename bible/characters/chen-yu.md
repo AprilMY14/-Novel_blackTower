@@ -14,6 +14,15 @@ Beneath that surface, he is fiercely protective of Lin Yien. When Lin Yien's saf
 
 Protect Lin Yien, even at the cost of his own body, safety, position, or moral boundary.
 
+## Approved Stable Facts
+
+- Chen Yu is a Guide and SS-class operative.
+- He is a strategic counterpart to Lin Yien.
+- He is observant, precise, controlled, and emotionally restrained.
+- He is a top-level guide within Squad Zero.
+- He is protective of Lin Yien.
+- His protective devotion can push him across moral boundaries when Lin Yien is threatened.
+
 ## Moral Boundary
 
 Chen Yu's restraint is a choice, not a lack of capacity. His protective devotion to Lin Yien is the condition that can make him cross lines he would otherwise hold.

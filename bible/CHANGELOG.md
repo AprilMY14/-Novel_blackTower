@@ -63,3 +63,11 @@
 - **Affected files:** `bible/timeline/project-echo.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Chen Yu historical Research/Intelligence background
+
+- **What changed:** Established that before his current role in Squad Zero, Chen Yu worked in Black Tower's research/intelligence functions.
+- **Why:** Records the human-approved historical background while leaving specific titles and career sequence unresolved.
+- **Affected files:** `bible/characters/chen-yu.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

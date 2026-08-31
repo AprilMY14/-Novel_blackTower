@@ -7,6 +7,7 @@
 - Pair-00 was the experimental focus of the project.
 - A resonance spike occurred during the experiment sequence.
 - Memory Lock was implemented after the incident.
+- Han Yicheng approved the implementation of Memory Lock after the Project Echo incident.
 - The project was terminated.
 - Records related to the incident were sealed or suppressed.
 

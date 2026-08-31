@@ -39,3 +39,11 @@
 - **Affected files:** `bible/timeline/project-echo.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Memory Lock effect on Lin Yien
+
+- **What changed:** Established that Lin Yien was affected by Memory Lock and lost memories related to Project Echo.
+- **Why:** Records the human-approved canon decision while leaving the total number of affected persons, exact scope, and mechanism unresolved.
+- **Affected files:** `bible/timeline/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

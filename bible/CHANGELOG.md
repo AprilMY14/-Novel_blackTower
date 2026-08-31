@@ -31,3 +31,11 @@
 - **Affected files:** `bible/characters/bai-junheng.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Memory Lock authority decision
+
+- **What changed:** Established Han Yicheng as the person who approved the implementation of Memory Lock after the Project Echo incident.
+- **Why:** Records the human-approved authority decision while leaving the affected persons, scope, mechanism, and memory-loss details unresolved.
+- **Affected files:** `bible/timeline/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

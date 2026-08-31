@@ -23,3 +23,11 @@
 - **Affected files:** `bible/characters/chen-yu.md`, `bible/locations/black-tower.md`, `bible/timeline/project-echo.md`, `bible/world/project-echo.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Bai Junheng identity normalization
+
+- **What changed:** Established Bai Junheng as the canonical display name and Bai Jingheng as an alternate name for the same person.
+- **Why:** Records the human-approved identity decision and prevents name drift across approved plot and manuscript evidence.
+- **Affected files:** `bible/characters/bai-junheng.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

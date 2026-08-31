@@ -15,3 +15,11 @@
 - **Affected files:** `bible/characters/chen-yu.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-08-31 — Conservative Bible canon promotion
+
+- **What changed:** Promoted approved stable facts for Chen Yu, Black Tower, and Project Echo into the root Bible. The records establish Chen Yu's approved Squad Zero Guide profile; Black Tower's broad operational and living-area facts; and Project Echo's established location, incident sequence, and broad world associations.
+- **Why:** Creates a limited canonical reference set from the approved conservative promotion list while preserving unresolved and reveal-sensitive material outside active canon.
+- **Affected files:** `bible/characters/chen-yu.md`, `bible/locations/black-tower.md`, `bible/timeline/project-echo.md`, `bible/world/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

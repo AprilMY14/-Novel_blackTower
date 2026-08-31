@@ -71,3 +71,11 @@
 - **Affected files:** `bible/characters/chen-yu.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Active canon/reveal boundary correction
+
+- **What changed:** Tightened the active Chen Yu character record to prevent unapproved historical-role details and early secret-role reveals from being treated as active writing guidance. Relationship guidance was also tightened to prohibit invented prior routines or shared history.
+- **Why:** Aligns the active Bible with the current human-approved conservative canon and Ch.22–30 reveal boundaries.
+- **Affected files:** `bible/characters/chen-yu.md`, `bible/REVEAL-GUARDRAILS.md`, `bible/timeline/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

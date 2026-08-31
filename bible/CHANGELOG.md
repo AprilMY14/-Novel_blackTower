@@ -47,3 +47,11 @@
 - **Affected files:** `bible/timeline/project-echo.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Project Echo survivor status
+
+- **What changed:** Established that other people involved in the Project Echo incident did not survive or were lost in the accident and are not established as surviving participants.
+- **Why:** Records the human-approved survivor-status decision while leaving the exact identities and number of deceased or missing persons unresolved.
+- **Affected files:** `bible/timeline/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

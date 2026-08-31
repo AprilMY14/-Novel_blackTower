@@ -55,3 +55,11 @@
 - **Affected files:** `bible/timeline/project-echo.md`
 - **Approved by:** Human maintainer (direct instruction)
 - **State:** Approved
+
+## 2026-09-01 — Memory Lock scope for Lin Yien
+
+- **What changed:** Established that Lin Yien lost all memories of the Project Echo events and all relationships connected to Project Echo.
+- **Why:** Records the human-approved Memory Lock scope for Lin Yien without defining the underlying mechanism or extending the scope to unrelated memories.
+- **Affected files:** `bible/timeline/project-echo.md`
+- **Approved by:** Human maintainer (direct instruction)
+- **State:** Approved

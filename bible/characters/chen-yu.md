@@ -22,6 +22,7 @@ Protect Lin Yien, even at the cost of his own body, safety, position, or moral b
 - He is a top-level guide within Squad Zero.
 - He is protective of Lin Yien.
 - His protective devotion can push him across moral boundaries when Lin Yien is threatened.
+- Before his current role in Squad Zero, Chen Yu worked in Black Tower's research/intelligence functions.
 
 ## Moral Boundary
 
@@ -41,6 +42,7 @@ Lin Yien is Chen Yu's overriding priority. In scenes involving danger, coercion,
 ## Unknown / To Be Established
 
 - Specific history and origin of his bond with Lin Yien.
+- Specific research/intelligence titles and career sequence before Squad Zero.
 - Limits and consequences of the actions he is willing to take.
 - How this devotion is tested across the main plot.
 

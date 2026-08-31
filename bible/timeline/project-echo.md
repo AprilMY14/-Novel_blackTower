@@ -8,6 +8,7 @@
 - A resonance spike occurred during the experiment sequence.
 - Memory Lock was implemented after the incident.
 - Han Yicheng approved the implementation of Memory Lock after the Project Echo incident.
+- Lin Yien was affected by Memory Lock and lost memories related to Project Echo.
 - The project was terminated.
 - Records related to the incident were sealed or suppressed.
 
